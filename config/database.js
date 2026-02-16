@@ -4,7 +4,7 @@ const path = require('path');
 require('dotenv').config(); // Carrega as variáveis do .env
 
 // Nome do arquivo do banco de dados (vindo do .env)
-const dbFileName = process.env.DB_FILE || 'muraldafe-DEV.db';
+const dbFileName = process.env.DB_FILE;
 
 // Caminho completo para o arquivo do banco de dados
 const dbPath = path.join(__dirname, '..', 'database', dbFileName);

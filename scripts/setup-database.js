@@ -8,7 +8,7 @@ require('dotenv').config(); // Carrega as variáveis do .env
 const schemaPath = path.resolve(__dirname, '../database/schema.sql');
 
 // Nome do arquivo do banco de dados (vindo do .env ou padrão)
-const dbFileName = process.env.DB_FILE || 'muraldafe-DEV.db';
+const dbFileName = process.env.DB_FILE;
 const dbPath = path.resolve(__dirname, `../database/${dbFileName}`);
 
 try {
