@@ -9,6 +9,7 @@
   "scripts": {
     "start": "node src/app.js",
     "setup-db": "node scripts/setup-database.js",
+    "dev:full": "npm run build:css && npm run dev",
     "dev": "nodemon src/app.js",
     "build:css": "tailwindcss -i ./src/styles/input.css -o ./public/css/styles.css --minify",
     "watch:css": "tailwindcss -i ./src/styles/input.css -o ./public/css/styles.css --watch",
@@ -22,7 +23,9 @@
     "dotenv": "^17.3.1",
     "ejs": "^4.0.1",
     "express": "^5.2.1",
-    "express-ejs-layouts": "^2.5.1"
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.19.0",
+    "slugify": "^1.6.6"
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.1.18",

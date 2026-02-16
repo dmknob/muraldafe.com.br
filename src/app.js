@@ -10,9 +10,23 @@ const db = require('../config/database');
 // Carregar variáveis de ambiente
 dotenv.config();
 
+const session = require('express-session');
+const auth = require('./middleware/auth');
+
 // Inicializar o app
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Configuração de Sessão
+app.use(session({
+    secret: process.env.SESSION_SECRET || 'segredo_padrao_mural_da_fe',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        secure: process.env.NODE_ENV === 'production', // true se HTTPS
+        maxAge: 1000 * 60 * 60 * 24 // 1 dia
+    }
+}));
 
 // Configuração do EJS como engine de templates
 app.use(expressLayouts);
@@ -24,10 +38,13 @@ app.set('layout', 'layouts/default');
 app.use(express.static(path.join(__dirname, '../public')));
 
 // Middleware para parsear dados de formulários
-//app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 
 // Middleware para parsear JSON
-//app.use(express.json());
+app.use(express.json());
+
+// Injetar variável de usuário (admin) nas views
+app.use(auth.injectUserVar);
 
 // Middleware para disponibilizar o caminho atual para as views
 app.use((req, res, next) => {
@@ -37,7 +54,7 @@ app.use((req, res, next) => {
 
 // Configuração das rotas
 app.use('/', publicRoutes);
-app.use('/', adminRoutes);
+app.use('/admin', adminRoutes);
 
 // Rota de fallback para páginas não encontradas
 app.use((req, res, next) => {

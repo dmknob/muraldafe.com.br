@@ -175,6 +175,30 @@ Rodapé          Contato (WhatsApp/E-mail) e assinatura institucional.
 
 * Segregação: A formalização de consentimento e a parte operacional de vendas permanecem fora do escopo do sistema do site.
 
+## Standards de Projeto
+
+### Formatação de Data
+* **Padrão**: Todas as datas devem ser exibidas no formato brasileiro DD/MM/AAAA.
+* **Implementação**: Utilizar `toLocaleDateString('pt-BR')` em todas as renderizações de data.
+* **Escopo**: Aplica-se a:
+  - Cards de graças
+  - Modais
+  - Páginas individuais de graças
+  - Interface administrativa
+* **Justificativa**: Consistência com o público brasileiro e conformidade com padrões locais.
+
+### Layout Mobile-First
+* **Dispositivo Base**: iPhone SE2 (375x667px)
+* **Breakpoint**: Design responsivo com breakpoint em `md:` (768px) do Tailwind CSS.
+* **Abordagem**:
+  - Mobile: Card views com layout vertical empilhado
+  - Desktop: Tabelas e layouts multi-coluna
+* **Áreas Críticas**:
+  - Dashboard administrativo
+  - Listas de gerenciamento (Intercessores, Comunidades, Graças)
+  - Navegação principal (menu hamburger no mobile)
+* **Justificativa**: A maioria do tráfego virá de dispositivos móveis, conforme especificado nas Restrições.
+
 ## Restrições
  * O site vai rodar em um VPS simples com Debian 12. Precisa ser rápido e responsivo, visto que a maioria do tráfego virá de celulares.
  * Neste projeto, SEO é fundamental, pois as artes já produzidas serão as 'propagandas' que teremos para captar mais clientes.

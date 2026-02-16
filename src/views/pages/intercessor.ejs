@@ -49,7 +49,7 @@
 <section class="max-w-7xl mx-auto mb-20">
     <div class="flex items-center justify-between mb-8 md:mb-12 border-b border-wine/20 pb-4">
         <h2 class="text-2xl md:text-3xl font-display text-gold uppercase tracking-wide">
-            Minhas Graças
+            Graças Relatadas
             <span class="text-sm font-serif text-ivory/50 normal-case tracking-normal ml-2">
                 (<%= gracas ? gracas.length : 0 %> relatos)
             </span>
@@ -68,14 +68,15 @@
     <% if (gracas && gracas.length> 0) { %>
         <div class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
             <% gracas.forEach(graca=> { %>
-                <!-- Card interativo que abre modal -->
+                <!-- Card Simples (Texto apenas) -->
                 <div onclick="openGraceModal('<%= graca.slug %>')"
-                    class="cursor-pointer group flex flex-col h-full bg-zinc-900/50 border border-white/5 rounded-lg p-4 md:p-6 transition-all duration-300 hover:border-gold/30 hover:bg-wine/10 relative overflow-hidden">
+                    class="cursor-pointer group flex flex-col h-full bg-zinc-900/50 border border-white/5 rounded-lg p-4 md:p-6 transition-all duration-300 hover:border-gold/30 hover:bg-wine/10 relative overflow-hidden shadow-lg hover:shadow-gold/5">
 
                     <!-- Header do Card -->
                     <div class="flex justify-between items-start mb-2 md:mb-4">
                         <div>
-                            <h3 class="font-display text-sm md:text-lg text-gold mb-1">
+                            <h3
+                                class="font-display text-sm md:text-lg text-gold mb-1 group-hover:text-gold/80 transition-colors">
                                 <%= graca.nome_exibicao || 'Devoto' %>
                             </h3>
                             <p class="text-[10px] md:text-xs font-serif text-ivory/50 uppercase tracking-wider">
@@ -84,28 +85,24 @@
                         </div>
                         <!-- Ícone sutil decorativo -->
                         <div class="opacity-10 group-hover:opacity-30 transition-opacity">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-8 md:w-8 text-gold" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
-                                    d="M12 4v16m8-8H4" />
-                            </svg>
+                            <span class="font-display text-2xl text-gold">†</span>
                         </div>
                     </div>
 
                     <!-- Resumo do Relato -->
                     <div
-                        class="font-serif text-ivory/70 text-xs md:text-sm leading-relaxed mb-4 line-clamp-3 md:line-clamp-4 flex-grow">
+                        class="font-serif text-ivory/70 text-xs md:text-sm leading-relaxed mb-4 line-clamp-4 md:line-clamp-5 flex-grow text-justify">
                         <%= graca.resumo || graca.relato %>
                     </div>
 
                     <!-- Footer do Card -->
                     <div class="pt-2 md:pt-4 border-t border-white/5 flex justify-between items-center mt-auto">
                         <span class="text-[10px] md:text-xs text-secondary-400 font-mono">
-                            <%= new Date(graca.criado_em).toLocaleDateString() %>
+                            <%= new Date(graca.criado_em).toLocaleDateString('pt-BR') %>
                         </span>
                         <span
-                            class="text-[10px] md:text-xs text-gold/60 uppercase tracking-widest group-hover:text-gold transition-colors">
-                            Ler relato &rarr;
+                            class="text-[10px] md:text-xs text-gold/60 uppercase tracking-widest group-hover:text-gold transition-colors flex items-center gap-1">
+                            Ler relato <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
                         </span>
                     </div>
                 </div>
@@ -137,7 +134,7 @@
         </h3>
 
         <p class="font-serif text-lg text-ivory/80 max-w-2xl mx-auto leading-relaxed">
-            "Sua história merece ser preservada."<br>
+            Sua história merece ser preservada.<br>
             Transforme sua Graça alcançada em um santinho exclusivo, com Registro de Memória Digital.
         </p>
 
@@ -190,8 +187,46 @@
 
             <!-- Modal Body (Scrollable) -->
             <div class="p-6 md:p-8 overflow-y-auto custom-scrollbar">
+
                 <div id="modal-body"
-                    class="prose prose-invert prose-gold max-w-none font-serif text-base md:text-lg leading-relaxed text-ivory/90 whitespace-pre-line">
+                    class="prose prose-invert prose-gold max-w-none font-serif text-base md:text-lg leading-relaxed text-ivory/90 whitespace-pre-line text-justify mb-8">
+                </div>
+
+                <!-- Imagens do Santinho (Se houver) - Movido para baixo -->
+                <div id="modal-images"
+                    class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8 pt-8 border-t border-white/5 hidden">
+                    <div class="space-y-2">
+                        <span class="text-xs text-gold/50 uppercase tracking-widest block text-center">Frente</span>
+                        <div class="relative overflow-hidden rounded-lg group cursor-pointer border border-gold/20 hover:border-gold/50 transition-all"
+                            onclick="openImageModal(document.getElementById('modal-img-front').src)">
+                            <img id="modal-img-front" src="" alt="Frente"
+                                class="w-full rounded-lg shadow-lg transition-transform duration-500 group-hover:scale-105">
+                            <div
+                                class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white drop-shadow-md"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="modal-img-back-container" class="space-y-2">
+                        <span class="text-xs text-gold/50 uppercase tracking-widest block text-center">Verso</span>
+                        <div class="relative overflow-hidden rounded-lg group cursor-pointer border border-gold/20 hover:border-gold/50 transition-all"
+                            onclick="openImageModal(document.getElementById('modal-img-back').src)">
+                            <img id="modal-img-back" src="" alt="Verso"
+                                class="w-full rounded-lg shadow-lg transition-transform duration-500 group-hover:scale-105">
+                            <div
+                                class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white drop-shadow-md"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -229,8 +264,33 @@
         document.getElementById('modal-title').textContent = grace.nome_exibicao || 'Devoto';
         document.getElementById('modal-subtitle').textContent = `${grace.localidade || 'Local não informado'}`;
         document.getElementById('modal-body').textContent = grace.relato;
-        document.getElementById('modal-date').textContent = new Date(grace.criado_em).toLocaleDateString();
+        document.getElementById('modal-date').textContent = new Date(grace.criado_em).toLocaleDateString('pt-BR');
         document.getElementById('modal-link').href = `/intercessores/<%= intercessor.slug %>/${grace.slug}`;
+
+        // Handle Images
+        const imgContainer = document.getElementById('modal-images');
+        const imgFront = document.getElementById('modal-img-front');
+        const imgBack = document.getElementById('modal-img-back');
+        const imgBackContainer = document.getElementById('modal-img-back-container');
+
+        if (grace.imagem_santinho_frente) {
+            imgContainer.classList.remove('hidden');
+            imgFront.src = grace.imagem_santinho_frente;
+
+            if (grace.imagem_santinho_verso) {
+                imgBackContainer.classList.remove('hidden');
+                imgBack.src = grace.imagem_santinho_verso;
+                // If both images, grid cols 2 is fine
+                imgContainer.classList.add('md:grid-cols-2');
+            } else {
+                imgBackContainer.classList.add('hidden');
+                imgContainer.classList.remove('md:grid-cols-2'); // Center single image?
+                // actually simpler to just leave grid cols, but maybe center it.
+                // for now let's keep it simple.
+            }
+        } else {
+            imgContainer.classList.add('hidden');
+        }
 
         // Show Modal
         modal.classList.remove('hidden');
@@ -284,4 +344,33 @@
             closeGraceModal();
         }
     });
+
+    // Image Lightbox Functions
+    function openImageModal(src) {
+        const modal = document.getElementById('image-lightbox-modal');
+        const img = document.getElementById('lightbox-image');
+        img.src = src;
+        modal.classList.remove('hidden');
+    }
+
+    function closeImageModal() {
+        const modal = document.getElementById('image-lightbox-modal');
+        modal.classList.add('hidden');
+    }
 </script>
+
+<!-- Image Lightbox Modal -->
+<div id="image-lightbox-modal"
+    class="fixed inset-0 z-[200] hidden bg-black/95 backdrop-blur-md flex items-center justify-center p-4"
+    onclick="closeImageModal()">
+    <div class="relative max-w-5xl w-full max-h-[90vh]">
+        <img id="lightbox-image" src="" alt=""
+            class="w-full h-full object-contain rounded-lg shadow-2xl border border-white/10">
+        <button class="absolute -top-12 right-0 text-white/50 hover:text-white transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+    </div>
+</div>
