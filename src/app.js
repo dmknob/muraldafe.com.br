@@ -17,6 +17,10 @@ const auth = require('./middleware/auth');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Trust proxy - CRÍTICO para produção com Nginx/reverse proxy
+// Permite que o Express confie no proxy e leia corretamente o protocolo HTTPS
+app.set('trust proxy', 1);
+
 // Configuração de Sessão
 app.use(session({
     secret: process.env.SESSION_SECRET || 'segredo_padrao_mural_da_fe',
@@ -24,7 +28,9 @@ app.use(session({
     saveUninitialized: false,
     cookie: {
         secure: process.env.NODE_ENV === 'production', // true se HTTPS
-        maxAge: 1000 * 60 * 60 * 24 // 1 dia
+        httpOnly: true, // Previne acesso via JavaScript
+        maxAge: 1000 * 60 * 60 * 24, // 1 dia
+        sameSite: 'lax' // Proteção CSRF
     }
 }));
 
