@@ -483,7 +483,7 @@ module.exports = {
             const totalGracas = db.prepare('SELECT COUNT(*) as count FROM gracas').get().count;
 
             const ultimasGracas = db.prepare(`
-                SELECT g.*, i.nome as intercessor_nome 
+                SELECT g.*, i.nome as intercessor_nome, i.slug as intercessor_slug 
                 FROM gracas g
                 JOIN intercessores i ON g.intercessor_id = i.id
                 ORDER BY g.criado_em DESC
