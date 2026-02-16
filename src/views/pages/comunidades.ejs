@@ -1,0 +1,100 @@
+<div class="relative py-20 overflow-hidden bg-primary">
+    <!-- Background Decorativo -->
+    <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
+        <div class="absolute top-0 left-1/4 w-full h-full bg-gradient-to-br from-wine/5 via-transparent to-transparent">
+        </div>
+        <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-gold/5 rounded-full blur-3xl"></div>
+    </div>
+
+    <div class="container mx-auto px-4 relative z-10">
+        <!-- Header da Página -->
+        <div class="text-center mb-16 space-y-4">
+            <h1 class="font-display text-4xl md:text-5xl text-gold uppercase tracking-widest">
+                Comunidades
+            </h1>
+            <p class="font-serif text-lg text-ivory/60 italic max-w-2xl mx-auto">
+                Santuários e locais de devoção onde a fé ganha vida e comunidade.
+            </p>
+            <div class="w-24 h-1 bg-gradient-to-r from-transparent via-gold/50 to-transparent mx-auto mt-6"></div>
+        </div>
+
+        <!-- Grid de Comunidades -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <% comunidades.forEach(comunidade=> {
+                let thumbnailUrl = '/images/placeholder-church.jpg'; // Default
+                try {
+                const photos = JSON.parse(comunidade.fotos_galeria_json);
+                if (photos && photos.length > 0) {
+                thumbnailUrl = photos[0];
+                }
+                } catch (e) {
+                // Fail silently or use default
+                }
+                %>
+                <a href="/comunidades/<%= comunidade.slug %>" class="group block h-full">
+                    <div
+                        class="relative h-full bg-zinc-900 border border-wine/20 rounded-xl overflow-hidden transition-all duration-500 group-hover:border-gold/40 group-hover:transform group-hover:-translate-y-1 group-hover:shadow-[0_0_30px_rgba(212,175,55,0.1)]">
+
+                        <!-- Imagem de Capa -->
+                        <div class="h-64 overflow-hidden relative">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10 opacity-80">
+                            </div>
+                            <img src="<%= thumbnailUrl %>" alt="<%= comunidade.nome %>"
+                                class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0">
+
+                            <!-- Padroeiro Badge -->
+                            <% if (comunidade.padroeiro_nome) { %>
+                                <div class="absolute top-4 right-4 z-20">
+                                    <span
+                                        class="bg-black/60 backdrop-blur-md border border-gold/30 text-gold text-xs font-display uppercase tracking-wider px-3 py-1 rounded-full">
+                                        <%= comunidade.padroeiro_nome %>
+                                    </span>
+                                </div>
+                                <% } %>
+                        </div>
+
+                        <!-- Conteúdo do Card -->
+                        <div class="p-6 md:p-8 space-y-4 relative z-20 -mt-12">
+                            <div
+                                class="bg-zinc-950 p-6 rounded-lg border border-white/5 shadow-xl group-hover:border-gold/20 transition-colors">
+                                <h2
+                                    class="font-display text-xl text-ivory group-hover:text-gold transition-colors mb-2">
+                                    <%= comunidade.nome %>
+                                </h2>
+
+                                <% if (comunidade.historia) { %>
+                                    <p
+                                        class="font-serif text-sm text-ivory/60 line-clamp-3 leading-relaxed group-hover:text-ivory/80 transition-colors">
+                                        <%= comunidade.historia %>
+                                    </p>
+                                    <% } %>
+
+                                        <div
+                                            class="pt-4 mt-4 border-t border-white/5 flex justify-between items-center">
+                                            <span class="text-xs font-mono text-secondary-500">
+                                                Ver Detalhes
+                                            </span>
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                class="h-5 w-5 text-gold/50 group-hover:text-gold transform group-hover:translate-x-1 transition-all"
+                                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                            </svg>
+                                        </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <% }) %>
+        </div>
+
+        <% if (comunidades.length===0) { %>
+            <div class="text-center py-20 bg-wine/5 rounded-xl border border-dashed border-wine/20">
+                <p class="font-serif text-xl text-ivory/40 italic">
+                    Nenhuma comunidade encontrada.
+                </p>
+            </div>
+            <% } %>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+@import "tailwindcss";
+@source "../../src";
+
+@theme {
+  --color-primary: #000000;
+  --color-wine: #2c0e0e;
+  --color-gold: #D4AF37;
+  --color-ivory: #FFFFF0;
+  --color-zinc-950: #09090b;
+
+  --font-sans: Cinzel, serif;
+  --font-serif: Cardo, "Playfair Display", serif;
+  --font-display: Cinzel, serif;
+  --font-body: Cardo, serif;
+}
+
+@layer base {
+
+  html,
+  body {
+    @apply overflow-x-hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display text-gold;
+  }
+
+  body {
+    @apply font-body bg-primary text-ivory;
+  }
+}
+
+@layer utilities {
+  .bg-modal-panel {
+    background-color: #09090b;
+  }
+
+  .bg-modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.95);
+  }
+}

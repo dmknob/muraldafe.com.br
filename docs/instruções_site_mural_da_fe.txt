@@ -1,0 +1,67 @@
+Este é o guia definitivo para a implementação do Mural da Fé. O objetivo é transformar a plataforma em uma
+extensão digital de luxo para os santuários, paróquias e fiéis, focando na autoridade técnica da Corpo Digital.
+1. Identidade Visual e Atmosfera (UI)
+O site deve espelhar a sofisticação da "Capa de Ouro". O design é minimalista, focado em contraste e
+tipografia nobre.
+● Paleta de Cores:
+○ Fundo: Preto absoluto ou um Vinho/Marrom extremamente profundo (quase negro).
+○ Destaques (Botões/Linhas): Dourado (#D4AF37) ou gradiente metálico.
+○ Texto Principal: Marfim ou Branco-gelo (evita o branco puro para não cansar a vista).
+● Tipografia:
+○ Títulos: Fonte Cinzel (imponente, clássica, caixa alta).
+○ Corpo de Texto: Fonte Cardo ou Playfair Display (elegantes e de fácil leitura).
+2. Estrutura da Home (O Portal)
+A Home deve ser limpa, agindo como um filtro de entrada. Nada de banners rotativos ou excesso de
+informações.
+Cabeçalho
+● Logotipo: MURAL DA FÉ (Fonte Cinzel, centralizado, em Dourado).
+● Apoio: Logo discreto da Corpo Digital no canto superior ou logo abaixo do nome.
+Texto Central (O Pitch de Venda)
+O FUTURO DA DEVOÇÃO É FÍSICO E DIGITAL
+O Mural da Fé une a tradição da iconografia sacra à inovação da Inteligência Artificial.
+Desenvolvemos santinhos modernos com artes exclusivas em alta definição, transformando cada
+peça física em um portal para um memorial digital permanente.
+Aqui, testemunhos de graças alcançadas e a história de comunidades são preservados com a
+beleza e a tecnologia que a fé merece.
+Os Botões de Ação (CTAs)
+Posicionados lado a lado ou um sobre o outro no mobile, com bordas douradas:
+● [ INTERCESSORES ] -> Leva para /intercessores/
+● [ COMUNIDADES ] -> Leva para /comunidades/
+3. Arquitetura de URLs e Navegação
+A estrutura deve ser rígida para facilitar a indexação do Google (SEO) e o compartilhamento.
+● Silo de Intercessores:
+○ Nível 1 (Mural Geral): muraldafe.com.br/intercessores/
+○ Nível 2 (Página do Santo): muraldafe.com.br/intercessores/padre-reus/
+○ Nível 3 (Graça Individual): muraldafe.com.br/intercessores/padre-reus/jsk
+● Silo de Comunidades:
+○ Nível 1 (Mural Geral): muraldafe.com.br/comunidades/
+○ Nível 2 (Página da Comunidade):
+muraldafe.com.br/comunidades/paroquia-santa-teresinha-campo-bom-rs/
+4. Lógica das Páginas Internas
+Página do Intercessor / Comunidade
+● Topo: História curta, oração e imagem em alta definição (gerada por IA).
+● O Mural (Grid de Cards): Abaixo da história, uma galeria de Cards de Graças.
+● Comportamento do Card: Ao clicar, o sistema deve carregar o relato completo.
+○ Recomendação Técnica: Usar URLs dinâmicas. Ao abrir o card, a URL muda para /jsk,
+permitindo o compartilhamento direto do milagre, mas mantendo o usuário visualmente dentro
+da página principal (o "tempo de permanência" que seu irmão deseja).
+Página/Modal do Relato (O Testemunho)
+● Texto polido do milagre.
+● Foto Real do Santinho: Um mockup 3D ou foto do produto físico final de pé, para provar a
+materialidade.
+● CTA Final: "Também recebeu uma graça? Transforme seu testemunho em um santinho exclusivo
+como este. [Botão Whats]"
+5. Rodapé (Autoridade e Venda)
+O rodapé é onde o negócio acontece para a Corpo Digital.
+● Contato: Link de WhatsApp e E-mail.
+● Frase de Fechamento: "Sua história merece ser eterna. Entre em contato para projetos exclusivos de
+santinhos modernos para você ou sua comunidade."
+● Assinatura Institucional:
+by Corpo Digital | Unidade de Performance
+(Sem qualquer menção à Brindaria neste domínio)
+Observação Técnica para o Desenvolvedor:
+Para o Google indexar as centenas de graças individualmente, certifique-se de que cada relato, mesmo que
+abra em um "modal", tenha uma URL única acessível e um arquivo de sitemap.xml atualizado. Isso garantirá
+que, quando alguém buscar por "Graça alcançada Padre Reus cura", o seu site apareça no topo.
+A partir daqui, se houver qualquer dúvida sobre o comportamento de algum elemento específico na tela, é só
+me chamar. O projeto está pronto para sair do papel.

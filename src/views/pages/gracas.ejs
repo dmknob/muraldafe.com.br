@@ -1,0 +1,10 @@
+<h2>Graças</h2>
+<ul>
+    <% graças.forEach(graca=> { %>
+        <li>
+            <a href="/gracas/<%= graca.slug %>">
+                <%= graca.nome_exibicao %>
+            </a>
+        </li>
+        <% }) %>
+</ul>

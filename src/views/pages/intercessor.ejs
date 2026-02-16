@@ -1,0 +1,287 @@
+<!-- Hero Section do Intercessor -->
+<div class="relative bg-black text-ivory overflow-hidden mb-12 rounded-xl border border-wine/30">
+    <!-- Background Blur/Image -->
+    <div class="absolute inset-0 opacity-30">
+        <% if (intercessor.imagem_url) { %>
+            <img src="<%= intercessor.imagem_url %>" alt="" class="w-full h-full object-cover blur-sm">
+            <% } else { %>
+                <div class="w-full h-full bg-gradient-to-br from-wine/20 to-black"></div>
+                <% } %>
+    </div>
+
+    <div class="relative z-10 p-8 md:p-12 flex flex-col md:flex-row gap-8 md:gap-12 items-center">
+        <!-- Imagem Principal -->
+        <div
+            class="w-48 h-48 md:w-64 md:h-64 flex-shrink-0 rounded-full border-4 border-gold/30 overflow-hidden shadow-2xl bg-black">
+            <% if (intercessor.imagem_url) { %>
+                <img src="<%= intercessor.imagem_url %>" alt="<%= intercessor.nome %>"
+                    class="w-full h-full object-cover">
+                <% } else { %>
+                    <div class="w-full h-full flex items-center justify-center bg-zinc-900">
+                        <span class="font-display text-6xl text-gold/20 select-none">†</span>
+                    </div>
+                    <% } %>
+        </div>
+
+        <!-- Informações -->
+        <div class="text-center md:text-left space-y-4 max-w-2xl">
+            <h1 class="text-3xl md:text-5xl font-display text-gold uppercase tracking-widest">
+                <%= intercessor.nome %>
+            </h1>
+
+            <% if (intercessor.historia_bio) { %>
+                <div class="font-serif text-lg leading-relaxed text-ivory/90">
+                    <%- intercessor.historia_bio %>
+                </div>
+                <% } %>
+
+                    <% if (intercessor.oracao) { %>
+                        <div
+                            class="mt-6 p-6 bg-wine/10 border-l-2 border-gold/50 rounded-r-lg italic font-serif text-gold/80">
+                            "<%= intercessor.oracao %>"
+                        </div>
+                        <% } %>
+        </div>
+    </div>
+</div>
+
+<!-- Mural de Graças -->
+<section class="max-w-7xl mx-auto mb-20">
+    <div class="flex items-center justify-between mb-8 md:mb-12 border-b border-wine/20 pb-4">
+        <h2 class="text-2xl md:text-3xl font-display text-gold uppercase tracking-wide">
+            Minhas Graças
+            <span class="text-sm font-serif text-ivory/50 normal-case tracking-normal ml-2">
+                (<%= gracas ? gracas.length : 0 %> relatos)
+            </span>
+        </h2>
+
+        <a href="/intercessores"
+            class="text-gold/60 hover:text-gold text-sm uppercase tracking-widest transition-colors flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Voltar
+        </a>
+    </div>
+
+    <% if (gracas && gracas.length> 0) { %>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
+            <% gracas.forEach(graca=> { %>
+                <!-- Card interativo que abre modal -->
+                <div onclick="openGraceModal('<%= graca.slug %>')"
+                    class="cursor-pointer group flex flex-col h-full bg-zinc-900/50 border border-white/5 rounded-lg p-4 md:p-6 transition-all duration-300 hover:border-gold/30 hover:bg-wine/10 relative overflow-hidden">
+
+                    <!-- Header do Card -->
+                    <div class="flex justify-between items-start mb-2 md:mb-4">
+                        <div>
+                            <h3 class="font-display text-sm md:text-lg text-gold mb-1">
+                                <%= graca.nome_exibicao || 'Devoto' %>
+                            </h3>
+                            <p class="text-[10px] md:text-xs font-serif text-ivory/50 uppercase tracking-wider">
+                                <%= graca.localidade || 'Local não informado' %>
+                            </p>
+                        </div>
+                        <!-- Ícone sutil decorativo -->
+                        <div class="opacity-10 group-hover:opacity-30 transition-opacity">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-8 md:w-8 text-gold" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+                                    d="M12 4v16m8-8H4" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Resumo do Relato -->
+                    <div
+                        class="font-serif text-ivory/70 text-xs md:text-sm leading-relaxed mb-4 line-clamp-3 md:line-clamp-4 flex-grow">
+                        <%= graca.resumo || graca.relato %>
+                    </div>
+
+                    <!-- Footer do Card -->
+                    <div class="pt-2 md:pt-4 border-t border-white/5 flex justify-between items-center mt-auto">
+                        <span class="text-[10px] md:text-xs text-secondary-400 font-mono">
+                            <%= new Date(graca.criado_em).toLocaleDateString() %>
+                        </span>
+                        <span
+                            class="text-[10px] md:text-xs text-gold/60 uppercase tracking-widest group-hover:text-gold transition-colors">
+                            Ler relato &rarr;
+                        </span>
+                    </div>
+                </div>
+                <% }) %>
+        </div>
+        <% } else { %>
+            <div class="text-center py-20 bg-wine/5 rounded-xl border border-dashed border-wine/20">
+                <p class="font-serif text-xl text-ivory/40 italic">
+                    Ainda não há graças registradas para este intercessor.
+                </p>
+                <p class="mt-2 text-sm text-gold/60">
+                    Seja o primeiro a compartilhar seu testemunho de fé.
+                </p>
+            </div>
+            <% } %>
+</section>
+
+<!-- CTA: Transforme sua graça em Santinho -->
+<div class="mt-20 mb-12 relative overflow-hidden rounded-2xl border border-gold/30 bg-zinc-950">
+    <!-- Background Glow -->
+    <div class="absolute top-0 right-0 w-64 h-64 bg-gold/10 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none">
+    </div>
+    <div class="absolute bottom-0 left-0 w-64 h-64 bg-wine/10 rounded-full blur-3xl -ml-32 -mb-32 pointer-events-none">
+    </div>
+
+    <div class="relative z-10 p-8 md:p-12 text-center space-y-6">
+        <h3 class="font-display text-2xl md:text-3xl text-gold">
+            Também alcançou uma graça?
+        </h3>
+
+        <p class="font-serif text-lg text-ivory/80 max-w-2xl mx-auto leading-relaxed">
+            "Sua história merece ser preservada."<br>
+            Transforme sua Graça alcançada em um santinho exclusivo, com Registro de Memória Digital.
+        </p>
+
+        <div class="pt-4">
+            <a href="https://wa.me/5551993668728?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20como%20transformar%20meu%20testemunho%20em%20um%20santinho%20do%20Mural%20da%20F%C3%A9."
+                target="_blank"
+                class="inline-flex items-center gap-3 bg-gold text-black font-display uppercase tracking-widest px-8 py-3 rounded hover:bg-white transition-colors duration-300 shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.4)]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.463 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+                </svg>
+                Falar no WhatsApp
+            </a>
+        </div>
+
+        <p class="text-xs text-ivory/30 font-serif">
+            by Corpo Digital | Unidade de Performance
+        </p>
+    </div>
+</div>
+
+<!-- Modal de Graça -->
+<div id="grace-modal" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true">
+    <!-- Backdrop -->
+    <div class="absolute inset-0 bg-modal-backdrop backdrop-blur-md transition-opacity opacity-0" id="modal-backdrop">
+    </div>
+
+    <!-- Modal Content -->
+    <div class="relative min-h-screen flex items-center justify-center p-4">
+        <div id="modal-panel"
+            class="bg-modal-panel border border-gold/20 rounded-xl shadow-2xl max-w-2xl w-full mx-auto transform transition-all scale-95 opacity-0 flex flex-col max-h-[90vh]">
+
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between p-6 border-b border-white/5">
+                <div>
+                    <h3 id="modal-title" class="font-display text-xl md:text-2xl text-gold"></h3>
+                    <p id="modal-subtitle" class="text-sm font-serif text-ivory/60 italic"></p>
+                </div>
+                <button onclick="closeGraceModal()"
+                    class="group flex items-center gap-2 text-ivory/60 hover:text-gold transition-colors px-3 py-2 rounded-lg hover:bg-white/5">
+                    <span class="text-sm font-display uppercase tracking-widest hidden md:inline">Fechar</span>
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                        class="h-6 w-6 group-hover:rotate-90 transition-transform duration-300" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Modal Body (Scrollable) -->
+            <div class="p-6 md:p-8 overflow-y-auto custom-scrollbar">
+                <div id="modal-body"
+                    class="prose prose-invert prose-gold max-w-none font-serif text-base md:text-lg leading-relaxed text-ivory/90 whitespace-pre-line">
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="p-6 border-t border-white/5 bg-black/20 flex justify-between items-center rounded-b-xl">
+                <a id="modal-link" href="#"
+                    class="text-xs text-gold/60 hover:text-gold uppercase tracking-widest transition-colors">
+                    Link Direto
+                </a>
+                <span id="modal-date" class="font-mono text-xs text-secondary-500"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Dados das Graças em JSON escondido -->
+<script id="graces-data" type="application/json">
+    <%- JSON.stringify(gracas || []) %>
+</script>
+
+<script>
+    const modal = document.getElementById('grace-modal');
+    const backdrop = document.getElementById('modal-backdrop');
+    const panel = document.getElementById('modal-panel');
+    const gracesData = JSON.parse(document.getElementById('graces-data').textContent);
+    let currentSlug = null;
+
+    function openGraceModal(slug) {
+        const grace = gracesData.find(g => g.slug === slug);
+        if (!grace) return;
+
+        currentSlug = slug;
+
+        // Populate Data
+        document.getElementById('modal-title').textContent = grace.nome_exibicao || 'Devoto';
+        document.getElementById('modal-subtitle').textContent = `${grace.localidade || 'Local não informado'}`;
+        document.getElementById('modal-body').textContent = grace.relato;
+        document.getElementById('modal-date').textContent = new Date(grace.criado_em).toLocaleDateString();
+        document.getElementById('modal-link').href = `/intercessores/<%= intercessor.slug %>/${grace.slug}`;
+
+        // Show Modal
+        modal.classList.remove('hidden');
+        // Small delay for transition
+        setTimeout(() => {
+            backdrop.classList.remove('opacity-0');
+            panel.classList.remove('scale-95', 'opacity-0');
+            panel.classList.add('scale-100', 'opacity-100');
+        }, 10);
+
+        // Update URL hash
+        history.pushState(null, null, `#${slug}`);
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeGraceModal() {
+        backdrop.classList.add('opacity-0');
+        panel.classList.remove('scale-100', 'opacity-100');
+        panel.classList.add('scale-95', 'opacity-0');
+
+        setTimeout(() => {
+            modal.classList.add('hidden');
+            document.body.style.overflow = '';
+            // Clear hash without reloading
+            history.pushState(null, null, window.location.pathname);
+        }, 300);
+    }
+
+    // Close on click outside panel
+    modal.addEventListener('click', (e) => {
+        // If the click is NOT inside the panel (or its children), close it
+        if (!panel.contains(e.target)) {
+            closeGraceModal();
+        }
+    });
+
+    // Handle initial hash
+    window.addEventListener('load', () => {
+        const hash = window.location.hash.substring(1);
+        if (hash) {
+            openGraceModal(hash);
+        }
+    });
+
+    // Handle browser back/forward buttons
+    window.addEventListener('popstate', () => {
+        const hash = window.location.hash.substring(1);
+        if (hash) {
+            openGraceModal(hash);
+        } else {
+            closeGraceModal();
+        }
+    });
+</script>

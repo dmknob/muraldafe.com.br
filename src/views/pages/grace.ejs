@@ -1,0 +1,64 @@
+<section
+    class="min-h-screen flex flex-col items-center justify-center p-6 bg-primary text-ivory relative overflow-hidden">
+    <!-- Background Element -->
+    <div class="absolute inset-0 bg-[url('/images/bg-texture.png')] opacity-20 bg-cover bg-center -z-10"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black -z-10"></div>
+
+    <div class="max-w-2xl w-full space-y-8 relative z-10">
+        <!-- Header: Intercessor Link -->
+        <div class="text-center mb-8">
+            <a href="/intercessores/<%= intercessor.slug %>"
+                class="group inline-flex items-center gap-2 text-gold/60 hover:text-gold transition-colors duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 transform group-hover:-translate-x-1 transition-transform" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                <span class="font-display uppercase tracking-widest text-sm">Mural de <%= intercessor.nome %></span>
+            </a>
+        </div>
+
+        <!-- Content Card -->
+        <div class="bg-zinc-900/80 backdrop-blur-md border border-wine/30 p-8 md:p-12 rounded-xl shadow-2xl relative">
+            <!-- Decorative Icon -->
+            <div
+                class="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-black border border-gold/30 p-3 rounded-full">
+                <span class="font-display text-2xl text-gold">†</span>
+            </div>
+
+            <!-- Title -->
+            <div class="text-center mb-8 border-b border-white/5 pb-8">
+                <h1 class="font-display text-3xl md:text-4xl text-gold mb-2">
+                    Graça Alcançada
+                </h1>
+                <p class="font-serif text-ivory/60 italic">
+                    Relato de <%= graca.nome_exibicao || 'Devoto' %> • <%= graca.localidade || 'Local não informado' %>
+                </p>
+            </div>
+
+            <!-- Body -->
+            <div class="prose prose-invert prose-gold max-w-none font-serif text-lg leading-relaxed text-ivory/90">
+                <p class="whitespace-pre-line">
+                    <%= graca.relato %>
+                </p>
+            </div>
+
+            <!-- Date -->
+            <div class="mt-8 pt-8 border-t border-white/5 text-right">
+                <span class="font-mono text-xs text-secondary-500">
+                    Registrado em <%= new Date(graca.criado_em).toLocaleDateString() %>
+                </span>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center space-y-4">
+            <p class="font-serif text-sm text-ivory/40">
+                Mural da Fé • Registro de Memória Digital
+            </p>
+            <img src="/images/logo-footer.png" alt="" class="h-8 opacity-30 mx-auto"
+                onerror="this.style.display='none'">
+        </div>
+    </div>
+</section>
