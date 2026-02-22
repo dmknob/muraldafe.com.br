@@ -41,9 +41,23 @@ exports.show = (req, res) => {
     `);
     const gracas = stmtGracas.all(comunidade.padroeiro_id);
 
+    const BASE_URL = process.env.BASE_URL || 'https://muraldafe.com.br';
+    const pageUrl = `${BASE_URL}/comunidades/${slug}`;
+    const ogImage = `${BASE_URL}/images/og-default.png`; // Fallback image for community (could be dynamic in future)
+
+    const jsonLd = JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "PlaceOfWorship",
+        "name": comunidade.nome,
+        "description": comunidade.historia_local ? comunidade.historia_local.replace(/<[^>]+>/g, '').substring(0, 155) : `Comunidade ${comunidade.nome} no Mural da Fé`,
+        "url": pageUrl,
+        "image": ogImage
+    });
+
     res.render('pages/comunidade', {
         title: comunidade.nome,
         comunidade,
-        gracas
+        gracas,
+        jsonLd
     });
 };

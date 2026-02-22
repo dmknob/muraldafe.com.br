@@ -54,11 +54,21 @@ exports.show = (req, res) => {
         <meta name="twitter:description" content="${ogDesc}">
         <meta name="twitter:image" content="${ogImage}">`;
 
+    const jsonLd = JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": intercessor.nome,
+        "description": ogDesc,
+        "image": ogImage,
+        "url": pageUrl
+    });
+
     res.render('pages/intercessor', {
         title: intercessor.nome,
         intercessor,
         gracas,
-        ogMeta
+        ogMeta,
+        jsonLd
     });
 };
 
@@ -113,10 +123,37 @@ exports.showGrace = (req, res) => {
         <meta name="twitter:description" content="${ogDesc}">
         <meta name="twitter:image" content="${ogImage}">`;
 
+    const jsonLd = JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": ogTitle,
+        "image": ogImage,
+        "author": {
+            "@type": "Person",
+            "name": graca.nome_exibicao || "Devoto Anônimo"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Mural da Fé",
+            "url": BASE_URL
+        },
+        "datePublished": graca.criado_em,
+        "description": ogDesc,
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": pageUrl
+        },
+        "about": {
+            "@type": "Person",
+            "name": intercessor.nome
+        }
+    });
+
     res.render('pages/grace', {
         title: `Graça de ${graca.nome_exibicao} - ${intercessor.nome}`,
         intercessor,
         graca,
-        ogMeta
+        ogMeta,
+        jsonLd
     });
 };

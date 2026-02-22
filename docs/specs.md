@@ -140,6 +140,14 @@ Rodapé          Contato (WhatsApp/E-mail) e assinatura institucional.
 - Cada relato/graça deve ter uma URL única e exclusiva para indexação do Google.
 - Gerar dinamicamente um `sitemap.xml` que inclua todas as URLs relevantes (intercessores, comunidades, graças).
 
+### SEO e Dados Estruturados (Schema.org / JSON-LD)
+Para garantir indexação semântica robusta, o Mural da Fé implementa os seguintes schemas via `<script type="application/ld+json">` dinâmico injetado no `<head>`:
+- **Home**: `WebSite` e/ou `Organization` indicando o nome e URL do projeto.
+- **Página do Intercessor (/intercessores/:slug)**: Objeto `Person` contendo nome, descrição (bio) e imagem principal.
+- **Página da Comunidade (/comunidades/:slug)**: Objeto `PlaceOfWorship` referenciando o endereço e imagem do local.
+- **Página da Graça (/intercessores/:santo/:relato)**: Objeto `Article` vinculado ao Intercessor (`about` -> `Person`), com o `articleBody` sendo o relato e a imagem principal (`foto_devoto` ou santinho).
+> *Nota Técnica: Microdata in-line está vetado neste projeto para preservar a integridade das classes CSS geradas pelo Tailwind e simplificar o SSR.*
+
 # Testes
 
 ## 1. Testes Unitários

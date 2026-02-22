@@ -76,6 +76,26 @@
                             window.addEventListener('load', function () { setTimeout(loadGA, 2000); });
                         }
                     </script>
+
+                    <!-- =============================================
+         Schema.org / JSON-LD
+         Padrão Corpo Digital — ver docs/project-standards.md §5.4
+    ============================================= -->
+                    <% if (typeof jsonLd !=='undefined' && jsonLd) { %>
+                        <script type="application/ld+json">
+            <%- jsonLd %>
+        </script>
+                        <% } else { %>
+                            <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "Mural da Fé",
+            "url": "<%= BASE_URL %>",
+            "description": "Registro de Memória Digital de graças alcançadas por intercessão dos santos."
+        }
+        </script>
+                            <% } %>
 </head>
 
 <body>

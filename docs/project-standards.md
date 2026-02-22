@@ -157,6 +157,27 @@ xl: 1280px  // Desktops
 - **Estrutura clara**: `/categoria/subcategoria/item`
 - **Permanência**: URLs não devem mudar (especialmente se impressas em materiais físicos)
 
+### 5.4 Dados Estruturados (Schema.org)
+- **Formato Exigido**: Sempre usar **JSON-LD** (`<script type="application/ld+json">`).
+- **Proibição**: Não usar marcação in-line no HTML (como Microdata ou RDFa). O HTML deve permanecer limpo.
+- **Implementação**: 
+  - O layout base deve conter um bloco condicional para o `jsonLd`, semelhante ao `ogMeta`.
+  - Páginas devem gerar e passar um objeto JSON stringificado.
+- **Exemplo Genérico**:
+  ```html
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Nome do Site",
+    "url": "https://www.dominio.com.br/"
+  }
+  </script>
+  ```
+- **Validação Obrigatória**:
+  - [Schema Markup Validator](https://validator.schema.org/)
+  - [Google Rich Results Test](https://search.google.com/test/rich-results)
+
 ---
 
 ## 6. Segurança
