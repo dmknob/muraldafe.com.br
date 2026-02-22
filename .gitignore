@@ -1,6 +1,6 @@
 node_modules/
 .env
 .DS_Store
-database/muraldafe-dev.db
+*.db
 media/
 docs/INSTRUÇOES_SITE_MURAL_DA_FE.pdf

@@ -141,6 +141,7 @@
         <div class="pt-4">
             <a href="https://wa.me/5551993668728?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20como%20transformar%20meu%20testemunho%20em%20um%20santinho%20do%20Mural%20da%20F%C3%A9."
                 target="_blank"
+                onclick="if(typeof gtag!=='undefined'){gtag('event','whatsapp_cta_click',{intercessor:'<%= intercessor.slug %>'})}"
                 class="inline-flex items-center gap-3 bg-gold text-black font-display uppercase tracking-widest px-8 py-3 rounded hover:bg-white transition-colors duration-300 shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.4)]">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
                     <path
@@ -304,6 +305,15 @@
         // Update URL hash
         history.pushState(null, null, `#${slug}`);
         document.body.style.overflow = 'hidden';
+
+        // GA4: Abertura de relato
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'view_grace_modal', {
+                intercessor: '<%= intercessor.slug %>',
+                grace_slug: slug,
+                grace_name: grace.nome_exibicao || 'Devoto'
+            });
+        }
     }
 
     function closeGraceModal() {
