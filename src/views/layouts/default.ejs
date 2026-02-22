@@ -24,13 +24,27 @@
     <noscript>
         <link rel="stylesheet" href="/css/styles.css">
     </noscript>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5Y0S4VFBZ2"></script>
+    <!-- Google Analytics (carregado após page load para não impactar LCP/FCP) -->
     <script>
+        // Stub: enfileira chamadas gtag() feitas antes do script carregar
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
         gtag('config', 'G-5Y0S4VFBZ2');
+
+        // Injeta o script do GA somente após a página estar visível e interativa
+        function loadGA() {
+            var s = document.createElement('script');
+            s.src = 'https://www.googletagmanager.com/gtag/js?id=G-5Y0S4VFBZ2';
+            s.async = true;
+            document.head.appendChild(s);
+        }
+
+        if (document.readyState === 'complete') {
+            setTimeout(loadGA, 2000);
+        } else {
+            window.addEventListener('load', function () { setTimeout(loadGA, 2000); });
+        }
     </script>
 </head>
 
