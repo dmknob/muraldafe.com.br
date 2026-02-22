@@ -76,7 +76,8 @@
             </nav>
 
             <!-- Mobile Menu Button -->
-            <button id="mobile-menu-btn" class="md:hidden text-gold hover:text-ivory focus:outline-none z-50">
+            <button id="mobile-menu-btn" aria-label="Abrir menu de navegação" aria-expanded="false"
+                aria-controls="mobile-menu" class="md:hidden text-gold hover:text-ivory focus:outline-none z-50">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -122,13 +123,11 @@
 
         if (mobileMenuBtn && mobileMenu) {
             mobileMenuBtn.addEventListener('click', () => {
+                const isOpen = !mobileMenu.classList.contains('translate-x-full');
                 mobileMenu.classList.toggle('translate-x-full');
-                // Prevent scrolling when menu is open
-                if (!mobileMenu.classList.contains('translate-x-full')) {
-                    body.style.overflow = 'hidden';
-                } else {
-                    body.style.overflow = 'auto';
-                }
+                mobileMenuBtn.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+                mobileMenuBtn.setAttribute('aria-label', isOpen ? 'Abrir menu de navegação' : 'Fechar menu de navegação');
+                body.style.overflow = isOpen ? 'auto' : 'hidden';
             });
         }
     </script>
