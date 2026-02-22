@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS gracas (
     relato TEXT NOT NULL,
     imagem_santinho_frente TEXT,
     imagem_santinho_verso TEXT,
+    foto_devoto TEXT,
     status TEXT DEFAULT 'rascunho' CHECK (status IN ('rascunho', 'publicado')),
     criado_em DATETIME DEFAULT CURRENT_TIMESTAMP,
 

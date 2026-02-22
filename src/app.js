@@ -52,9 +52,10 @@ app.use(express.json());
 // Injetar variável de usuário (admin) nas views
 app.use(auth.injectUserVar);
 
-// Middleware para disponibilizar o caminho atual para as views
+// Middleware para disponibilizar o caminho atual e BASE_URL para as views
 app.use((req, res, next) => {
     res.locals.path = req.path;
+    res.locals.BASE_URL = process.env.BASE_URL || 'https://muraldafe.com.br';
     next();
 });
 

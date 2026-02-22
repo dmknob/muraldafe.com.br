@@ -29,10 +29,36 @@ exports.show = (req, res) => {
     const gracesStmt = db.prepare("SELECT * FROM gracas WHERE intercessor_id = ? AND status = 'publicado' ORDER BY criado_em DESC");
     const gracas = gracesStmt.all(intercessor.id);
 
+    const BASE_URL = process.env.BASE_URL || 'https://muraldafe.com.br';
+    const pageUrl = `${BASE_URL}/intercessores/${slug}`;
+    const ogImage = intercessor.imagem_url
+        ? (intercessor.imagem_url.startsWith('http') ? intercessor.imagem_url : `${BASE_URL}${intercessor.imagem_url}`)
+        : `${BASE_URL}/images/og-default.png`;
+    const ogDesc = intercessor.historia_bio
+        ? intercessor.historia_bio.replace(/<[^>]+>/g, '').substring(0, 155) + '...'
+        : 'Mural da Fé — Registro de Memória Digital de graças alcançadas por intercessão dos santos.';
+
+    const ogMeta = `
+        <meta name="description" content="${ogDesc}">
+        <meta property="og:site_name" content="Mural da Fé">
+        <meta property="og:title" content="${intercessor.nome} | Mural da Fé">
+        <meta property="og:description" content="${ogDesc}">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="${pageUrl}">
+        <meta property="og:image" content="${ogImage}">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta property="og:locale" content="pt_BR">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="${intercessor.nome} | Mural da Fé">
+        <meta name="twitter:description" content="${ogDesc}">
+        <meta name="twitter:image" content="${ogImage}">`;
+
     res.render('pages/intercessor', {
         title: intercessor.nome,
         intercessor,
-        gracas
+        gracas,
+        ogMeta
     });
 };
 
@@ -60,9 +86,37 @@ exports.showGrace = (req, res) => {
         });
     }
 
+    const BASE_URL = process.env.BASE_URL || 'https://muraldafe.com.br';
+    const pageUrl = `${BASE_URL}/intercessores/${slug}/${grace_slug}`;
+    const rawImage = graca.foto_devoto || graca.imagem_santinho_frente;
+    const ogImage = rawImage
+        ? (rawImage.startsWith('http') ? rawImage : `${BASE_URL}${rawImage}`)
+        : `${BASE_URL}/images/og-default.png`;
+    const ogTitle = `Graça de ${graca.nome_exibicao} — ${intercessor.nome} | Mural da Fé`;
+    const ogDesc = graca.resumo
+        ? graca.resumo.substring(0, 155)
+        : `Relato de graça alcançada pela intercessão de ${intercessor.nome}. Mural da Fé.`;
+
+    const ogMeta = `
+        <meta name="description" content="${ogDesc}">
+        <meta property="og:site_name" content="Mural da Fé">
+        <meta property="og:title" content="${ogTitle}">
+        <meta property="og:description" content="${ogDesc}">
+        <meta property="og:type" content="article">
+        <meta property="og:url" content="${pageUrl}">
+        <meta property="og:image" content="${ogImage}">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="675">
+        <meta property="og:locale" content="pt_BR">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="${ogTitle}">
+        <meta name="twitter:description" content="${ogDesc}">
+        <meta name="twitter:image" content="${ogImage}">`;
+
     res.render('pages/grace', {
         title: `Graça de ${graca.nome_exibicao} - ${intercessor.nome}`,
         intercessor,
-        graca
+        graca,
+        ogMeta
     });
 };

@@ -5,47 +5,77 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-        <%= title %>
+        <%= title %> | Mural da Fé
     </title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <!-- Carregamento assíncrono das fontes (não bloqueia render) -->
-    <link rel="preload" as="style"
-        href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
-        onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>
-        <link rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap">
-    </noscript>
+    <!-- =============================================
+         Meta Tags / Open Graph / Twitter Card
+         Padrão Corpo Digital — ver docs/project-standards.md §5
+         ogMeta é injetado pelo controller por página;
+         o fallback abaixo cobre home e páginas genéricas.
+    ============================================= -->
+    <% if (typeof ogMeta !=='undefined' && ogMeta) { %>
+        <%- ogMeta %>
+            <% } else { %>
+                <meta name="description"
+                    content="Mural da Fé — Registro de Memória Digital de graças alcançadas por intercessão dos santos.">
+                <meta property="og:site_name" content="Mural da Fé">
+                <meta property="og:title" content="<%= title %> | Mural da Fé">
+                <meta property="og:description"
+                    content="Mural da Fé — Registro de Memória Digital de graças alcançadas por intercessão dos santos.">
+                <meta property="og:type" content="website">
+                <meta property="og:url" content="<%= BASE_URL %><%= locals.path || '' %>">
+                <meta property="og:image" content="<%= BASE_URL %>/images/og-default.png">
+                <meta property="og:image:width" content="1200">
+                <meta property="og:image:height" content="630">
+                <meta property="og:locale" content="pt_BR">
+                <meta name="twitter:card" content="summary_large_image">
+                <meta name="twitter:title" content="<%= title %> | Mural da Fé">
+                <meta name="twitter:description"
+                    content="Mural da Fé — Registro de Memória Digital de graças alcançadas por intercessão dos santos.">
+                <% } %>
+                    <link rel="canonical" href="<%= BASE_URL %><%= locals.path || '' %>">
 
-    <!-- Carregamento assíncrono do CSS principal (não bloqueia render) -->
-    <link rel="preload" as="style" href="/css/styles.css" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>
-        <link rel="stylesheet" href="/css/styles.css">
-    </noscript>
-    <!-- Google Analytics (carregado após page load para não impactar LCP/FCP) -->
-    <script>
-        // Stub: enfileira chamadas gtag() feitas antes do script carregar
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'G-5Y0S4VFBZ2');
+                    <link rel="preconnect" href="https://fonts.googleapis.com">
+                    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-        // Injeta o script do GA somente após a página estar visível e interativa
-        function loadGA() {
-            var s = document.createElement('script');
-            s.src = 'https://www.googletagmanager.com/gtag/js?id=G-5Y0S4VFBZ2';
-            s.async = true;
-            document.head.appendChild(s);
-        }
+                    <!-- Carregamento assíncrono das fontes (não bloqueia render) -->
+                    <link rel="preload" as="style"
+                        href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+                        onload="this.onload=null;this.rel='stylesheet'">
+                    <noscript>
+                        <link rel="stylesheet"
+                            href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap">
+                    </noscript>
 
-        if (document.readyState === 'complete') {
-            setTimeout(loadGA, 2000);
-        } else {
-            window.addEventListener('load', function () { setTimeout(loadGA, 2000); });
-        }
-    </script>
+                    <!-- Carregamento assíncrono do CSS principal (não bloqueia render) -->
+                    <link rel="preload" as="style" href="/css/styles.css"
+                        onload="this.onload=null;this.rel='stylesheet'">
+                    <noscript>
+                        <link rel="stylesheet" href="/css/styles.css">
+                    </noscript>
+                    <!-- Google Analytics (carregado após page load para não impactar LCP/FCP) -->
+                    <script>
+                        // Stub: enfileira chamadas gtag() feitas antes do script carregar
+                        window.dataLayer = window.dataLayer || [];
+                        function gtag() { dataLayer.push(arguments); }
+                        gtag('js', new Date());
+                        gtag('config', 'G-5Y0S4VFBZ2');
+
+                        // Injeta o script do GA somente após a página estar visível e interativa
+                        function loadGA() {
+                            var s = document.createElement('script');
+                            s.src = 'https://www.googletagmanager.com/gtag/js?id=G-5Y0S4VFBZ2';
+                            s.async = true;
+                            document.head.appendChild(s);
+                        }
+
+                        if (document.readyState === 'complete') {
+                            setTimeout(loadGA, 2000);
+                        } else {
+                            window.addEventListener('load', function () { setTimeout(loadGA, 2000); });
+                        }
+                    </script>
 </head>
 
 <body>

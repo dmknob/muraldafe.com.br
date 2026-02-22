@@ -345,7 +345,7 @@ module.exports = {
             intercessor_id, comunidades_id, slug,
             nome_privado, nome_exibicao, localidade,
             resumo, relato, imagem_santinho_frente, imagem_santinho_verso,
-            status
+            foto_devoto, status
         } = req.body;
 
         try {
@@ -358,8 +358,8 @@ module.exports = {
                     intercessor_id, comunidades_id, slug,
                     nome_privado, nome_exibicao, localidade,
                     resumo, relato, imagem_santinho_frente, imagem_santinho_verso,
-                    status
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    foto_devoto, status
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             `);
 
             insert.run(
@@ -373,6 +373,7 @@ module.exports = {
                 relato,
                 imagem_santinho_frente,
                 imagem_santinho_verso,
+                foto_devoto || null,
                 status || 'rascunho'
             );
 
@@ -419,7 +420,7 @@ module.exports = {
             intercessor_id, comunidades_id, slug,
             nome_privado, nome_exibicao, localidade,
             resumo, relato, imagem_santinho_frente, imagem_santinho_verso,
-            status
+            foto_devoto, status
         } = req.body;
 
         try {
@@ -428,7 +429,7 @@ module.exports = {
                 SET intercessor_id = ?, comunidades_id = ?, slug = ?,
                     nome_privado = ?, nome_exibicao = ?, localidade = ?,
                     resumo = ?, relato = ?, imagem_santinho_frente = ?, imagem_santinho_verso = ?,
-                    status = ?
+                    foto_devoto = ?, status = ?
                 WHERE id = ?
             `);
 
@@ -443,6 +444,7 @@ module.exports = {
                 relato,
                 imagem_santinho_frente,
                 imagem_santinho_verso,
+                foto_devoto || null,
                 status,
                 id
             );
