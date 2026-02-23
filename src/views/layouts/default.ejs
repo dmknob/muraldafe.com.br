@@ -39,21 +39,12 @@
                     <link rel="preconnect" href="https://fonts.googleapis.com">
                     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-                    <!-- Carregamento assíncrono das fontes (não bloqueia render) -->
-                    <link rel="preload" as="style"
-                        href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
-                        onload="this.onload=null;this.rel='stylesheet'">
-                    <noscript>
-                        <link rel="stylesheet"
-                            href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap">
-                    </noscript>
+                    <!-- Google Fonts -->
+                    <link rel="stylesheet"
+                        href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap">
 
-                    <!-- Carregamento assíncrono do CSS principal (não bloqueia render) -->
-                    <link rel="preload" as="style" href="/css/styles.css"
-                        onload="this.onload=null;this.rel='stylesheet'">
-                    <noscript>
-                        <link rel="stylesheet" href="/css/styles.css">
-                    </noscript>
+                    <!-- CSS Principal (Síncrono para evitar FOUC/Atraso de LCP) -->
+                    <link rel="stylesheet" href="/css/styles.css">
                     <!-- Google Analytics (carregado após page load para não impactar LCP/FCP) -->
                     <script>
                         // Stub: enfileira chamadas gtag() feitas antes do script carregar
