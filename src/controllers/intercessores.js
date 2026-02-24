@@ -56,11 +56,23 @@ exports.show = (req, res) => {
 
     const jsonLd = JSON.stringify({
         "@context": "https://schema.org",
-        "@type": "Person",
-        "name": intercessor.nome,
-        "description": ogDesc,
-        "image": ogImage,
-        "url": pageUrl
+        "@graph": [
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    { "@type": "ListItem", "position": 1, "name": "Mural da Fé", "item": BASE_URL },
+                    { "@type": "ListItem", "position": 2, "name": "Intercessores", "item": `${BASE_URL}/intercessores` },
+                    { "@type": "ListItem", "position": 3, "name": intercessor.nome, "item": pageUrl }
+                ]
+            },
+            {
+                "@type": "Person",
+                "name": intercessor.nome,
+                "description": ogDesc,
+                "image": ogImage,
+                "url": pageUrl
+            }
+        ]
     });
 
     res.render('pages/intercessor', {
@@ -125,28 +137,41 @@ exports.showGrace = (req, res) => {
 
     const jsonLd = JSON.stringify({
         "@context": "https://schema.org",
-        "@type": "Article",
-        "headline": ogTitle,
-        "image": ogImage,
-        "author": {
-            "@type": "Person",
-            "name": graca.nome_exibicao || "Devoto Anônimo"
-        },
-        "publisher": {
-            "@type": "Organization",
-            "name": "Mural da Fé",
-            "url": BASE_URL
-        },
-        "datePublished": graca.criado_em,
-        "description": ogDesc,
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": pageUrl
-        },
-        "about": {
-            "@type": "Person",
-            "name": intercessor.nome
-        }
+        "@graph": [
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    { "@type": "ListItem", "position": 1, "name": "Mural da Fé", "item": BASE_URL },
+                    { "@type": "ListItem", "position": 2, "name": "Intercessores", "item": `${BASE_URL}/intercessores` },
+                    { "@type": "ListItem", "position": 3, "name": intercessor.nome, "item": `${BASE_URL}/intercessores/${slug}` },
+                    { "@type": "ListItem", "position": 4, "name": `Graça de ${graca.nome_exibicao || "Devoto"}`, "item": pageUrl }
+                ]
+            },
+            {
+                "@type": "Article",
+                "headline": ogTitle,
+                "image": ogImage,
+                "author": {
+                    "@type": "Person",
+                    "name": graca.nome_exibicao || "Devoto Anônimo"
+                },
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "Mural da Fé",
+                    "url": BASE_URL
+                },
+                "datePublished": graca.criado_em,
+                "description": ogDesc,
+                "mainEntityOfPage": {
+                    "@type": "WebPage",
+                    "@id": pageUrl
+                },
+                "about": {
+                    "@type": "Person",
+                    "name": intercessor.nome
+                }
+            }
+        ]
     });
 
     res.render('pages/grace', {

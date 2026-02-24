@@ -47,11 +47,23 @@ exports.show = (req, res) => {
 
     const jsonLd = JSON.stringify({
         "@context": "https://schema.org",
-        "@type": "PlaceOfWorship",
-        "name": comunidade.nome,
-        "description": comunidade.historia_local ? comunidade.historia_local.replace(/<[^>]+>/g, '').substring(0, 155) : `Comunidade ${comunidade.nome} no Mural da Fé`,
-        "url": pageUrl,
-        "image": ogImage
+        "@graph": [
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    { "@type": "ListItem", "position": 1, "name": "Mural da Fé", "item": BASE_URL },
+                    { "@type": "ListItem", "position": 2, "name": "Comunidades", "item": `${BASE_URL}/comunidades` },
+                    { "@type": "ListItem", "position": 3, "name": comunidade.nome, "item": pageUrl }
+                ]
+            },
+            {
+                "@type": "PlaceOfWorship",
+                "name": comunidade.nome,
+                "description": comunidade.historia_local ? comunidade.historia_local.replace(/<[^>]+>/g, '').substring(0, 155) : `Comunidade ${comunidade.nome} no Mural da Fé`,
+                "url": pageUrl,
+                "image": ogImage
+            }
+        ]
     });
 
     res.render('pages/comunidade', {

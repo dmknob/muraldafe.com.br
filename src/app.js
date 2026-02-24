@@ -3,6 +3,9 @@ const express = require('express');
 const path = require('path');
 const dotenv = require('dotenv');
 const expressLayouts = require('express-ejs-layouts');
+const helmet = require('helmet');
+const cookieParser = require('cookie-parser');
+const csurf = require('csurf');
 const publicRoutes = require('./routes/public');
 const adminRoutes = require('./routes/admin');
 const db = require('../config/database');
@@ -20,6 +23,14 @@ const PORT = process.env.PORT || 3000;
 // Trust proxy - CRÍTICO para produção com Nginx/reverse proxy
 // Permite que o Express confie no proxy e leia corretamente o protocolo HTTPS
 app.set('trust proxy', 1);
+
+// Segurança com Helmet (Desativando CSP para manter compatibilidade com scripts inline)
+app.use(helmet({
+    contentSecurityPolicy: false
+}));
+
+// Setup de Cookies (necessário para o csurf de forma moderna)
+app.use(cookieParser(process.env.SESSION_SECRET || 'segredo_padrao_mural_da_fe'));
 
 // Configuração de Sessão
 app.use(session({

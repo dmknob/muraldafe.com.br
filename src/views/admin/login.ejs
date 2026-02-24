@@ -20,11 +20,19 @@
                 <% } %>
 
                     <input type="hidden" name="remember" value="true">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     <div class="rounded-md shadow-sm -space-y-px">
                         <div>
+                            <label for="username" class="sr-only">Usuário</label>
+                            <input id="username" name="username" type="text" autocomplete="username" required
+                                class="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-700 placeholder-gray-500 text-white bg-gray-800 focus:outline-none focus:ring-gold focus:border-gold focus:z-10 sm:text-sm"
+                                placeholder="Nome de Usuário">
+                        </div>
+                        <div>
                             <label for="password" class="sr-only">Senha</label>
-                            <input id="password" name="password" type="password" required
-                                class="appearance-none rounded-md relative block w-full px-3 py-3 border border-gray-700 placeholder-gray-500 text-white bg-gray-800 focus:outline-none focus:ring-gold focus:border-gold focus:z-10 sm:text-sm"
+                            <input id="password" name="password" type="password" autocomplete="current-password"
+                                required
+                                class="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-700 placeholder-gray-500 text-white bg-gray-800 focus:outline-none focus:ring-gold focus:border-gold focus:z-10 sm:text-sm"
                                 placeholder="Senha de Acesso">
                         </div>
                     </div>

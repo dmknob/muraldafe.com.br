@@ -17,100 +17,110 @@
         </div>
         <% } %>
 
-            <form action="<%= comunidade ? `/admin/comunidades/${comunidade.id}/editar` : '/admin/comunidades/nova' %>"
-                method="POST" class="bg-white shadow-sm rounded-lg border border-gray-200 p-6 space-y-6">
+            <form
+                action="<%- typeof comunidade !== 'undefined' ? '/admin/comunidades/' + comunidade.id + '/editar' : '/admin/comunidades/nova' %>"
+                method="POST" class="space-y-6" enctype="multipart/form-data">
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Nome -->
-                    <div>
-                        <label for="nome" class="block text-sm font-medium text-gray-700">Nome da Comunidade *</label>
-                        <input type="text" name="nome" id="nome" required
-                            value="<%= comunidade ? comunidade.nome : '' %>"
-                            class="mt-1 focus:ring-gold focus:border-gold block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-2 px-3 border"
-                            oninput="generateSlug()">
-                    </div>
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
-                    <!-- Slug -->
-                    <div>
-                        <label for="slug" class="block text-sm font-medium text-gray-700">Slug (URL) *</label>
-                        <div class="mt-1 flex rounded-md shadow-sm">
-                            <span
-                                class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
-                                /comunidades/
-                            </span>
-                            <input type="text" name="slug" id="slug" required
-                                value="<%= comunidade ? comunidade.slug : '' %>"
-                                class="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md focus:ring-gold focus:border-gold sm:text-sm border-gray-300 border">
+                <!-- Informações Básicas -->
+                <div class="bg-white shadow-sm rounded-lg border border-gray-200 p-6 space-y-6">
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Nome -->
+                        <div>
+                            <label for="nome" class="block text-sm font-medium text-gray-700">Nome da Comunidade
+                                *</label>
+                            <input type="text" name="nome" id="nome" required
+                                value="<%= comunidade ? comunidade.nome : '' %>"
+                                class="mt-1 focus:ring-gold focus:border-gold block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-2 px-3 border"
+                                oninput="generateSlug()">
                         </div>
-                        <p class="mt-1 text-xs text-gray-500">Único e sem espaços.</p>
-                    </div>
-                </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Padroeiro -->
+                        <!-- Slug -->
+                        <div>
+                            <label for="slug" class="block text-sm font-medium text-gray-700">Slug (URL) *</label>
+                            <div class="mt-1 flex rounded-md shadow-sm">
+                                <span
+                                    class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
+                                    /comunidades/
+                                </span>
+                                <input type="text" name="slug" id="slug" required
+                                    value="<%= comunidade ? comunidade.slug : '' %>"
+                                    class="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md focus:ring-gold focus:border-gold sm:text-sm border-gray-300 border">
+                            </div>
+                            <p class="mt-1 text-xs text-gray-500">Único e sem espaços.</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Padroeiro -->
+                        <div>
+                            <label for="padroeiro_id" class="block text-sm font-medium text-gray-700">Padroeiro
+                                (Intercessor) *</label>
+                            <select id="padroeiro_id" name="padroeiro_id" required
+                                class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-gold focus:border-gold sm:text-sm">
+                                <option value="">Selecione...</option>
+                                <% intercessores.forEach(i=> { %>
+                                    <option value="<%= i.id %>" <%=comunidade && comunidade.padroeiro_id===i.id
+                                        ? 'selected' : '' %>><%= i.nome %>
+                                    </option>
+                                    <% }) %>
+                            </select>
+                        </div>
+
+                        <!-- Site URL -->
+                        <div>
+                            <label for="site_url" class="block text-sm font-medium text-gray-700">Site Oficial
+                                (URL)</label>
+                            <input type="text" name="site_url" id="site_url"
+                                value="<%= comunidade ? comunidade.site_url : '' %>"
+                                class="mt-1 focus:ring-gold focus:border-gold block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-2 px-3 border"
+                                placeholder="https://...">
+                        </div>
+                    </div>
+
+                    <!-- História -->
                     <div>
-                        <label for="padroeiro_id" class="block text-sm font-medium text-gray-700">Padroeiro
-                            (Intercessor) *</label>
-                        <select id="padroeiro_id" name="padroeiro_id" required
+                        <label for="historia" class="block text-sm font-medium text-gray-700">História Local *</label>
+                        <textarea name="historia" id="historia" rows="6" required
+                            class="mt-1 focus:ring-gold focus:border-gold block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-2 px-3 border"><%= comunidade ? comunidade.historia : '' %></textarea>
+                    </div>
+
+                    <!-- Galeria JSON (Manual por enquanto) -->
+                    <div>
+                        <label for="fotos_galeria_json" class="block text-sm font-medium text-gray-700">Galeria de Fotos
+                            (JSON)</label>
+                        <textarea name="fotos_galeria_json" id="fotos_galeria_json" rows="3"
+                            class="mt-1 focus:ring-gold focus:border-gold block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-2 px-3 border font-mono text-xs"><%= comunidade ? comunidade.fotos_galeria_json : '[]' %></textarea>
+                        <p class="mt-1 text-xs text-gray-500">Ex: ["https://site.com/foto1.jpg",
+                            "https://site.com/foto2.jpg"]</p>
+                    </div>
+
+                    <!-- Status -->
+                    <div>
+                        <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+                        <select id="status" name="status"
                             class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-gold focus:border-gold sm:text-sm">
-                            <option value="">Selecione...</option>
-                            <% intercessores.forEach(i=> { %>
-                                <option value="<%= i.id %>" <%=comunidade && comunidade.padroeiro_id===i.id ? 'selected'
-                                    : '' %>><%= i.nome %>
-                                </option>
-                                <% }) %>
+                            <option value="rascunho" <%=comunidade && comunidade.status==='rascunho' ? 'selected' : ''
+                                %>
+                                >Rascunho</option>
+                            <option value="publicado" <%=comunidade && comunidade.status==='publicado' ? 'selected' : ''
+                                %>
+                                >Publicado</option>
                         </select>
                     </div>
 
-                    <!-- Site URL -->
-                    <div>
-                        <label for="site_url" class="block text-sm font-medium text-gray-700">Site Oficial (URL)</label>
-                        <input type="text" name="site_url" id="site_url"
-                            value="<%= comunidade ? comunidade.site_url : '' %>"
-                            class="mt-1 focus:ring-gold focus:border-gold block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-2 px-3 border"
-                            placeholder="https://...">
+                    <div class="flex justify-end pt-5">
+                        <a href="/admin/comunidades"
+                            class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold mr-3">
+                            Cancelar
+                        </a>
+                        <button type="submit"
+                            class="bg-wine border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-wine/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-wine">
+                            Salvar
+                        </button>
                     </div>
-                </div>
-
-                <!-- História -->
-                <div>
-                    <label for="historia" class="block text-sm font-medium text-gray-700">História Local *</label>
-                    <textarea name="historia" id="historia" rows="6" required
-                        class="mt-1 focus:ring-gold focus:border-gold block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-2 px-3 border"><%= comunidade ? comunidade.historia : '' %></textarea>
-                </div>
-
-                <!-- Galeria JSON (Manual por enquanto) -->
-                <div>
-                    <label for="fotos_galeria_json" class="block text-sm font-medium text-gray-700">Galeria de Fotos
-                        (JSON)</label>
-                    <textarea name="fotos_galeria_json" id="fotos_galeria_json" rows="3"
-                        class="mt-1 focus:ring-gold focus:border-gold block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-2 px-3 border font-mono text-xs"><%= comunidade ? comunidade.fotos_galeria_json : '[]' %></textarea>
-                    <p class="mt-1 text-xs text-gray-500">Ex: ["https://site.com/foto1.jpg",
-                        "https://site.com/foto2.jpg"]</p>
-                </div>
-
-                <!-- Status -->
-                <div>
-                    <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
-                    <select id="status" name="status"
-                        class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-gold focus:border-gold sm:text-sm">
-                        <option value="rascunho" <%=comunidade && comunidade.status==='rascunho' ? 'selected' : '' %>
-                            >Rascunho</option>
-                        <option value="publicado" <%=comunidade && comunidade.status==='publicado' ? 'selected' : '' %>
-                            >Publicado</option>
-                    </select>
-                </div>
-
-                <div class="flex justify-end pt-5">
-                    <a href="/admin/comunidades"
-                        class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold mr-3">
-                        Cancelar
-                    </a>
-                    <button type="submit"
-                        class="bg-wine border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-wine/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-wine">
-                        Salvar
-                    </button>
-                </div>
             </form>
 </div>
 
