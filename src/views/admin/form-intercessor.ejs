@@ -73,11 +73,21 @@
                             class="mt-1 focus:ring-gold focus:border-gold block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-2 px-3 border"><%= intercessor ? intercessor.historia_bio : '' %></textarea>
                     </div>
 
-                    <!-- Oração -->
+                    <!-- Oração Oficial -->
                     <div>
-                        <label for="oracao" class="block text-sm font-medium text-gray-700">Oração</label>
+                        <label for="oracao" class="block text-sm font-medium text-gray-700">Oração (Oficial)</label>
                         <textarea name="oracao" id="oracao" rows="4"
                             class="mt-1 focus:ring-gold focus:border-gold block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-2 px-3 border"><%= intercessor ? intercessor.oracao : '' %></textarea>
+                    </div>
+
+                    <!-- Oração Poética -->
+                    <div>
+                        <label for="oracao_poetica" class="block text-sm font-medium text-gray-700">Oração Poética /
+                            Poema</label>
+                        <textarea name="oracao_poetica" id="oracao_poetica" rows="4"
+                            class="mt-1 focus:ring-gold focus:border-gold block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-2 px-3 border"><%= intercessor ? intercessor.oracao_poetica : '' %></textarea>
+                        <p class="mt-1 text-xs text-gray-500">Versão poética da prece, exibida separadamente da oração
+                            oficial na página.</p>
                     </div>
 
                     <!-- Status -->

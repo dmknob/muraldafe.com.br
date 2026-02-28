@@ -66,17 +66,17 @@ module.exports = {
     },
 
     postNovoIntercessor: (req, res) => {
-        const { nome, historia_bio, oracao, imagem_url, status, slug } = req.body;
+        const { nome, historia_bio, oracao, oracao_poetica, imagem_url, status, slug } = req.body;
 
         try {
             const finalSlug = slug ? slugify(slug, { lower: true, strict: true }) : slugify(nome, { lower: true, strict: true });
 
             const insert = db.prepare(`
-                INSERT INTO intercessores (nome, slug, historia_bio, oracao, imagem_url, status)
-                VALUES (?, ?, ?, ?, ?, ?)
+                INSERT INTO intercessores (nome, slug, historia_bio, oracao, oracao_poetica, imagem_url, status)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
             `);
 
-            insert.run(nome, finalSlug, historia_bio || null, oracao || null, imagem_url || null, status || 'rascunho');
+            insert.run(nome, finalSlug, historia_bio || null, oracao || null, oracao_poetica || null, imagem_url || null, status || 'rascunho');
 
             res.redirect('/admin/intercessores?success=created');
         } catch (error) {
@@ -110,18 +110,18 @@ module.exports = {
 
     postEditarIntercessor: (req, res) => {
         const { id } = req.params;
-        const { nome, historia_bio, oracao, imagem_url, status, slug } = req.body;
+        const { nome, historia_bio, oracao, oracao_poetica, imagem_url, status, slug } = req.body;
 
         try {
             const finalSlug = slugify(slug, { lower: true, strict: true });
 
             const update = db.prepare(`
                 UPDATE intercessores 
-                SET nome = ?, slug = ?, historia_bio = ?, oracao = ?, imagem_url = ?, status = ?
+                SET nome = ?, slug = ?, historia_bio = ?, oracao = ?, oracao_poetica = ?, imagem_url = ?, status = ?
                 WHERE id = ?
             `);
 
-            update.run(nome, finalSlug, historia_bio || null, oracao || null, imagem_url || null, status, id);
+            update.run(nome, finalSlug, historia_bio || null, oracao || null, oracao_poetica || null, imagem_url || null, status, id);
 
             res.redirect('/admin/intercessores?success=updated');
         } catch (error) {

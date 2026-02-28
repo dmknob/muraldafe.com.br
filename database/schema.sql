@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS intercessores (
     slug TEXT UNIQUE NOT NULL,
     historia_bio TEXT,
     oracao TEXT,
+    oracao_poetica TEXT,
     imagem_url TEXT,
     status TEXT DEFAULT 'rascunho' CHECK (status IN ('rascunho', 'publicado')),
     criado_em DATETIME DEFAULT CURRENT_TIMESTAMP

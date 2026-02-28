@@ -54,9 +54,16 @@
                     <% if (intercessor.oracao) { %>
                         <div
                             class="mt-6 p-6 bg-wine/10 border-l-2 border-gold/50 rounded-r-lg italic font-serif text-gold/80">
-                            "<%= intercessor.oracao %>"
+                            "<%- intercessor.oracao %>"
                         </div>
                         <% } %>
+
+                            <% if (intercessor.oracao_poetica) { %>
+                                <div
+                                    class="mt-4 p-6 bg-transparent border border-gold/20 rounded-lg italic font-serif text-ivory/70 text-center leading-relaxed whitespace-pre-line shadow-[inset_0_0_20px_rgba(212,175,55,0.05)]">
+                                    <%- intercessor.oracao_poetica %>
+                                </div>
+                                <% } %>
         </div>
     </div>
 </div>
