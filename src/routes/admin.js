@@ -7,13 +7,7 @@ const csurf = require('csurf');
 // Setup CSRF protection
 const csrfProtection = csurf({ cookie: true });
 
-// Rotas de Autenticação (Login não precisa de CSRF para o GET, mas precisa para o POST)
-router.get('/', (req, res) => res.redirect('/admin/dashboard'));
-router.get('/login', csrfProtection, adminController.getLogin);
-router.post('/login', csrfProtection, adminController.postLogin);
-router.get('/logout', adminController.logout);
-
-// Aplica CSRF em todas as rotas abaixo
+// Aplica CSRF em todas as rotas admin
 router.use(csrfProtection);
 
 // Injetar token CSRF nas views
@@ -21,6 +15,12 @@ router.use((req, res, next) => {
     res.locals.csrfToken = req.csrfToken();
     next();
 });
+
+// Rotas de Autenticação
+router.get('/', (req, res) => res.redirect('/admin/dashboard'));
+router.get('/login', adminController.getLogin);
+router.post('/login', adminController.postLogin);
+router.get('/logout', adminController.logout);
 
 // Rotas Dashboard (Protegidas)
 router.get('/dashboard', auth.isAuthenticated, adminController.getDashboard);
