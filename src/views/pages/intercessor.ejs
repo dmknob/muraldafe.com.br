@@ -15,7 +15,7 @@
             class="w-48 h-48 md:w-64 md:h-64 flex-shrink-0 rounded-full border-4 border-gold/30 overflow-hidden shadow-2xl bg-black">
             <% if (intercessor.imagem_url) { %>
                 <img src="<%= intercessor.imagem_url %>" alt="<%= intercessor.nome %>"
-                    class="w-full h-full object-cover">
+                    class="w-full h-full object-cover object-top">
                 <% } else { %>
                     <div class="w-full h-full flex items-center justify-center bg-zinc-900">
                         <span class="font-display text-6xl text-gold/20 select-none">†</span>
