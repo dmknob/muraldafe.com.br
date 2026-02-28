@@ -18,8 +18,8 @@
         <% } %>
 
             <form
-                action="<%- typeof comunidade !== 'undefined' ? '/admin/comunidades/' + comunidade.id + '/editar' : '/admin/comunidades/nova' %>"
-                method="POST" class="space-y-6" enctype="multipart/form-data">
+                action="<%= comunidade ? '/admin/comunidades/' + comunidade.id + '/editar' : '/admin/comunidades/nova' %>"
+                method="POST" class="space-y-6">
 
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
@@ -82,8 +82,8 @@
 
                     <!-- História -->
                     <div>
-                        <label for="historia" class="block text-sm font-medium text-gray-700">História Local *</label>
-                        <textarea name="historia" id="historia" rows="6" required
+                        <label for="historia" class="block text-sm font-medium text-gray-700">História Local</label>
+                        <textarea name="historia" id="historia" rows="6"
                             class="mt-1 focus:ring-gold focus:border-gold block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-2 px-3 border"><%= comunidade ? comunidade.historia : '' %></textarea>
                     </div>
 

@@ -18,8 +18,8 @@
         <% } %>
 
             <form
-                action="<%- typeof intercessor !== 'undefined' ? '/admin/intercessores/' + intercessor.id + '/editar' : '/admin/intercessores/novo' %>"
-                method="POST" class="space-y-6" enctype="multipart/form-data">
+                action="<%= intercessor ? '/admin/intercessores/' + intercessor.id + '/editar' : '/admin/intercessores/novo' %>"
+                method="POST" class="space-y-6">
 
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
@@ -55,9 +55,9 @@
 
                     <!-- Imagem URL -->
                     <div>
-                        <label for="imagem_url" class="block text-sm font-medium text-gray-700">URL da Imagem (WebP)
-                            *</label>
-                        <input type="text" name="imagem_url" id="imagem_url" required
+                        <label for="imagem_url" class="block text-sm font-medium text-gray-700">URL da Imagem
+                            (WebP)</label>
+                        <input type="text" name="imagem_url" id="imagem_url"
                             value="<%= intercessor ? intercessor.imagem_url : '' %>"
                             class="mt-1 focus:ring-gold focus:border-gold block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-2 px-3 border"
                             placeholder="/uploads/intercessores/exemplo.webp ou https://...">
@@ -67,16 +67,16 @@
 
                     <!-- Bio -->
                     <div>
-                        <label for="historia_bio" class="block text-sm font-medium text-gray-700">Biografia / História
-                            *</label>
-                        <textarea name="historia_bio" id="historia_bio" rows="5" required
+                        <label for="historia_bio" class="block text-sm font-medium text-gray-700">Biografia /
+                            História</label>
+                        <textarea name="historia_bio" id="historia_bio" rows="5"
                             class="mt-1 focus:ring-gold focus:border-gold block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-2 px-3 border"><%= intercessor ? intercessor.historia_bio : '' %></textarea>
                     </div>
 
                     <!-- Oração -->
                     <div>
-                        <label for="oracao" class="block text-sm font-medium text-gray-700">Oração *</label>
-                        <textarea name="oracao" id="oracao" rows="4" required
+                        <label for="oracao" class="block text-sm font-medium text-gray-700">Oração</label>
+                        <textarea name="oracao" id="oracao" rows="4"
                             class="mt-1 focus:ring-gold focus:border-gold block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-2 px-3 border"><%= intercessor ? intercessor.oracao : '' %></textarea>
                     </div>
 

@@ -76,7 +76,7 @@ module.exports = {
                 VALUES (?, ?, ?, ?, ?, ?)
             `);
 
-            insert.run(nome, finalSlug, historia_bio, oracao, imagem_url, status || 'rascunho');
+            insert.run(nome, finalSlug, historia_bio || null, oracao || null, imagem_url || null, status || 'rascunho');
 
             res.redirect('/admin/intercessores?success=created');
         } catch (error) {
@@ -121,7 +121,7 @@ module.exports = {
                 WHERE id = ?
             `);
 
-            update.run(nome, finalSlug, historia_bio, oracao, imagem_url, status, id);
+            update.run(nome, finalSlug, historia_bio || null, oracao || null, imagem_url || null, status, id);
 
             res.redirect('/admin/intercessores?success=updated');
         } catch (error) {
@@ -205,7 +205,7 @@ module.exports = {
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             `);
 
-            insert.run(nome, finalSlug, historia, padroeiro_id, padroeiro_nome, site_url, fotos_galeria_json || '[]', status || 'rascunho');
+            insert.run(nome, finalSlug, historia || null, padroeiro_id, padroeiro_nome, site_url || null, fotos_galeria_json || '[]', status || 'rascunho');
 
             res.redirect('/admin/comunidades?success=created');
         } catch (error) {
@@ -256,7 +256,7 @@ module.exports = {
                 WHERE id = ?
             `);
 
-            update.run(nome, finalSlug, historia, padroeiro_id, padroeiro_nome, site_url, fotos_galeria_json || '[]', status, id);
+            update.run(nome, finalSlug, historia || null, padroeiro_id, padroeiro_nome, site_url || null, fotos_galeria_json || '[]', status, id);
 
             res.redirect('/admin/comunidades?success=updated');
         } catch (error) {
@@ -366,13 +366,13 @@ module.exports = {
                 intercessor_id,
                 comunidades_id || null,
                 slug,
-                nome_privado,
+                nome_privado || null,
                 nome_exibicao,
-                localidade,
+                localidade || null,
                 resumo,
                 relato,
-                imagem_santinho_frente,
-                imagem_santinho_verso,
+                imagem_santinho_frente || null,
+                imagem_santinho_verso || null,
                 foto_devoto || null,
                 status || 'rascunho'
             );
@@ -437,13 +437,13 @@ module.exports = {
                 intercessor_id,
                 comunidades_id || null,
                 slug,
-                nome_privado,
+                nome_privado || null,
                 nome_exibicao,
-                localidade,
+                localidade || null,
                 resumo,
                 relato,
-                imagem_santinho_frente,
-                imagem_santinho_verso,
+                imagem_santinho_frente || null,
+                imagem_santinho_verso || null,
                 foto_devoto || null,
                 status,
                 id
