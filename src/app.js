@@ -63,6 +63,14 @@ app.use(express.json());
 // Injetar variável de usuário (admin) nas views
 app.use(auth.injectUserVar);
 
+// Descobrir dimensões do OG default no boot
+const { getImageDimensions } = require('./utils/imageHandler');
+const defaultOgDims = getImageDimensions('/images/og-default.webp');
+if (defaultOgDims) {
+    app.locals.defaultOgWidth = defaultOgDims.width;
+    app.locals.defaultOgHeight = defaultOgDims.height;
+}
+
 // Middleware para disponibilizar o caminho atual e BASE_URL para as views
 app.use((req, res, next) => {
     res.locals.path = req.path;
