@@ -1,4 +1,4 @@
-const sizeOf = require('image-size');
+const { imageSize } = require('image-size');
 const path = require('path');
 const fs = require('fs');
 
@@ -18,9 +18,9 @@ function getImageDimensions(webPath) {
         let localPath = webPath;
         // Se a url completa foi passada e aponta para nós, vamos varrer e pegar só a rota local
         if (webPath.startsWith(baseUrl)) {
-             localPath = webPath.replace(baseUrl, '');
+            localPath = webPath.replace(baseUrl, '');
         }
-        
+
         // Remove a "/" extra se houver
         if (localPath.startsWith('/')) {
             localPath = localPath.substring(1);
@@ -29,7 +29,8 @@ function getImageDimensions(webPath) {
         const absolutePath = path.join(__dirname, '../../public', localPath);
 
         if (fs.existsSync(absolutePath)) {
-            const dimensions = sizeOf(absolutePath);
+            const buffer = fs.readFileSync(absolutePath);
+            const dimensions = imageSize(buffer);
             return dimensions;
         }
     } catch (e) {
